@@ -18,3 +18,17 @@ A bind mount should be used to move the createTabkle.sql into the container
 
 app.py requires the mysql password to be added to line 8 replacing [PASSWORD]
 
+## Useful Docker Commands
+sudo gpasswd -a <username> docker - add user to docker group
+docker images - list images available on host
+docker inspect - give details on instance
+docker ps - list docker processes
+docker ps -a - list all docker processes that have run/available
+docker run -d <dockername> - run docker in background
+docker run -d -p <portvm>:<portcontainer> <containerid/dockername> - run in background and map to
+ same port as the container is running (port publish)
+docker run -d --name <givecontainername> <imagename> - run in background and give specific name to local container
+docker stop <containerid/dockername> - stop container
+docker rm <containerid/dockername> - delete container
+docker stop $(docker ps -q) && docker rm $(docker ps -aq) - stop all containers from running and remove all of the containers
+docker run -d --network <networkname> <imagename> - run cotnainer and connect to network
