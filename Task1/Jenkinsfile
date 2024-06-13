@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+    //environment {
+    //    VERSION = "v1"
+    //    DOCKERHUB_CREDS = credentials('dockerhub')
+    //}
+    stages {
+        stage ('Clean and Initialise') {
+            steps {
+                sh 'docker stop \$(docker ps -q) || true'
+                sh 'docker rm \$(docker ps -qa) || true'
+                // sh 'docker rmi \$(docker images -a) || true'
+                sh 'docker network create task1-network || true'
+            }
+        }
+        stage ('Build Images') {
+            steps {
+                sh 'docker build -t task1_flask_app:v1 Task1'
+                sh 'docker build -t task1_nginx:v1 -f Task1/Dockerfile.nginx Task1'
+            }
+        }
+        stage ('Deploy Containers') {
+            steps {
+                sh 'docker run -d --network task1-network --name flask-app task1_flask_app:v1'
+                sh 'docker run -d -p 80:80 --name nginx task1_nginx:v1'
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
