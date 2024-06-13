@@ -22,7 +22,7 @@ pipeline {
         stage ('Deploy Containers') {
             steps {
                 sh 'docker run -d --network task1-network --name flask-app task1_flask_app:v1'
-                sh 'docker run -d -p 80:80 --name nginx task1_nginx:v1'
+                sh 'docker run -d -p 80:80 --network task1-network --name nginx task1_nginx:v1'
             }
         }
     }
