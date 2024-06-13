@@ -1,5 +1,5 @@
 # Use Python 3.6 or later as a base image
-FROM python:3.9
+FROM python:3.8
 
 # Copy contents into image
 COPY requirements.txt .
@@ -12,9 +12,11 @@ RUN pip install -r requirements.txt
 COPY .gitkeep .
 COPY app.py .
 COPY nginx.conf .
+COPY Dockerfile .
+COPY Dockerfile.nginx .
 
 # Set YOUR_NAME environment variable
-ENV YOUR_NAME Niles
+ENV YOUR_NAME="Niles"
 
 # Expose the correct port
 EXPOSE 5500
