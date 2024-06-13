@@ -2,11 +2,16 @@
 FROM python:3.9
 
 # Copy contents into image
-COPY . .
+COPY requirements.txt .
 
 # Install pip dependencies from requirements
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
+
+# Copy contents into image
+COPY .gitkeep .
+COPY app.py .
+COPY nginx.conf .
 
 # Set YOUR_NAME environment variable
 ENV YOUR_NAME Niles
